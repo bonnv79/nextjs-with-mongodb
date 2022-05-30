@@ -42,16 +42,6 @@ export default function AddPost() {
     <div>
       <div className={styles.container}>
         <form onSubmit={handlePost} className={styles.form}>
-          {error ? (
-            <div className={styles.formItem}>
-              <h3 className={styles.error}>{error}</h3>
-            </div>
-          ) : null}
-          {message ? (
-            <div className={styles.formItem}>
-              <h3 className={styles.message}>{message}</h3>
-            </div>
-          ) : null}
           <div className={styles.formItem}>
             <label>Title</label>
             <input
@@ -78,6 +68,17 @@ export default function AddPost() {
 
             <button type="submit">Add post</button>
           </div>
+
+          {error ? (
+            <div className={styles.formItem}>
+              <h3 className={styles.error}>{error}</h3>
+            </div>
+          ) : null}
+          {message ? (
+            <div className={styles.formItem}>
+              <h3 className={styles.message}>{message}</h3>
+            </div>
+          ) : null}
         </form>
       </div>
     </div>

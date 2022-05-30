@@ -23,8 +23,6 @@ const columns = [
   }
 ]
 
-const API_POST = getUrl('/api/posts');
-
 export default function Posts({ data: initData }) {
   const [selected, setSelected] = useState({});
   const toggle = ({ target: { name } }) => {
@@ -40,12 +38,14 @@ export default function Posts({ data: initData }) {
     setLoading(true);
 
     try {
-      const res = await fetch(API_POST);
-      const json = await res.json();
-      if (json.success) {
-        setData(json.data);
-      }
-      setLoading(false);
+      await fetch(getUrl('/api/posts'), {
+        method: 'GET'
+      }).then(res => res.json()).then(json => {
+        if (json.success) {
+          setData(json.data);
+        }
+        setLoading(false);
+      })
     } catch (error) {
       return setLoading(false);
     }
@@ -55,7 +55,7 @@ export default function Posts({ data: initData }) {
     setLoading(true);
 
     try {
-      await fetch(API_POST, {
+      await fetch(getUrl('/api/posts'), {
         method: 'PUT',
         body: postId,
       });
@@ -71,7 +71,7 @@ export default function Posts({ data: initData }) {
     setLoading(true);
 
     try {
-      await fetch(API_POST, {
+      await fetch(getUrl('/api/posts'), {
         method: 'DELETE',
         body: postId,
       });
@@ -89,7 +89,7 @@ export default function Posts({ data: initData }) {
     try {
       const ids = Object.keys(selected).filter(key => selected[key]);
 
-      await fetch(API_POST, {
+      await fetch(getUrl('/api/posts'), {
         method: 'DELETE',
         body: JSON.stringify(ids),
       });
@@ -185,10 +185,10 @@ export default function Posts({ data: initData }) {
 }
 
 Posts.getInitialProps = async (ctx) => {
-  const res = await fetch(getUrl('/api/posts', ctx))
-  const json = await res.json()
+  const res = await fetch(getUrl('/api/posts', ctx));
+  const json = await res.json();
   return {
-    data: json['data'],
-    message: json['message']
+    data: json.data,
+    message: json.message,
   }
 }
