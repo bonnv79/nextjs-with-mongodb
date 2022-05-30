@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import styles from 'styles/Home.module.scss';
+import { getUrl } from 'utils';
+
+const API_POST = getUrl('/api/posts');
 
 export default function AddPost() {
   const [title, setTitle] = useState('');
@@ -22,7 +25,7 @@ export default function AddPost() {
       date: new Date().toISOString(),
     };
 
-    let response = await fetch('/api/posts', {
+    let response = await fetch(API_POST, {
       method: 'POST',
       body: JSON.stringify(post),
     });

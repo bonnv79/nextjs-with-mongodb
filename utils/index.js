@@ -7,20 +7,16 @@ export function sleep(ms) {
   });
 }
 
-export const getUrl = (path, context) => {
-  const { req } = context || {};
-  if (req && req.headers && req.headers.host) {
-    const protocol = req.headers['x-forwarded-proto'] || 'http'
-    const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
-    return baseUrl + path;
-  }
+export const getUrl = (path) => {
+  let res = path;
   if (DEV_URL) {
-    return `${DEV_URL}${path}`
+    res = `${DEV_URL}${path}`
   }
   if (PROD_URL) {
-    return `${PROD_URL}${path}`
+    res = `${PROD_URL}${path}`
   }
-  return path;
+  console.log(res)
+  return res;
 }
 
 export default {}

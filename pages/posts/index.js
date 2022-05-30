@@ -33,8 +33,6 @@ export default function Posts({ data: initData }) {
 
   const [data, setData] = useState(initData);
   const [loading, setLoading] = useState(false);
-  // console.log(data)
-  console.log(selected)
 
   const reloadData = async () => {
     setLoading(true);
@@ -185,7 +183,7 @@ export default function Posts({ data: initData }) {
 }
 
 Posts.getInitialProps = async (ctx) => {
-  const res = await fetch(getUrl('/api/posts', ctx))
+  const res = await fetch(API_POST)
   const json = await res.json()
   return {
     data: json['data'],
