@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import clientPromise from '../lib/mongodb'
 
 export default function Home({ isConnected }) {
@@ -55,6 +56,17 @@ export default function Home({ isConnected }) {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
+
+          <Link href="/posts">
+            <a
+              className="card"
+            >
+              <h3>Posts</h3>
+              <p>
+                Displays all posts in the database.
+              </p>
+            </a>
+          </Link>
         </div>
       </main>
 
