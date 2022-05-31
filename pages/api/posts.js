@@ -68,16 +68,7 @@ async function deletePost(req, res) {
   try {
     let { db } = await connectToDatabase();
     let reqBody = req.body;
-    if (!reqBody) {
-      return res.json({
-        message: 'Request failed because of missing id',
-        success: false,
-      });
-    }
-
-    try {
-      reqBody = JSON.parse(reqBody);
-    } catch (error) { }
+    reqBody = JSON.parse(reqBody);
 
     if (Array.isArray(reqBody)) {
       const idList = reqBody.map(id => ObjectId(id));
@@ -95,7 +86,7 @@ async function deletePost(req, res) {
         });
     } else {
       await db.collection(table).deleteOne({
-        _id: ObjectId(reqBody),
+        _id: ObjectId(reqBody.id),
       });
     }
 

@@ -51,7 +51,9 @@ export default function Posts({ data: initData }) {
 
   const deletePost = (postId) => {
     deleteAPI(API_POSTS, {
-      body: postId,
+      body: JSON.stringify({
+        id: postId
+      }),
     }, () => {
       reloadData();
     }, null, setLoading);
