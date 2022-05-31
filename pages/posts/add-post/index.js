@@ -5,9 +5,10 @@ import { postAPI } from 'utils';
 import { API_POSTS } from 'contants/apiPath';
 
 export default function AddPost() {
+  const date = new Date();
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState(date);
+  const [content, setContent] = useState(date);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
@@ -29,8 +30,9 @@ export default function AddPost() {
       body: JSON.stringify(post),
     }, (data) => {
       setMessage(data.message);
-      setTitle('');
-      setContent('');
+      const date = new Date();
+      setTitle(date);
+      setContent(date);
     }, (data) => {
       setError(data.message);
     }, setLoading);

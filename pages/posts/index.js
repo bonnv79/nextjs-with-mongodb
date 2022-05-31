@@ -18,10 +18,10 @@ const columns = [
     id: 'body',
     name: 'Body',
   },
-  {
-    id: 'date',
-    name: 'Date',
-  }
+  // {
+  //   id: 'date',
+  //   name: 'Date',
+  // }
 ]
 
 export default function Posts({ data: initData }) {
