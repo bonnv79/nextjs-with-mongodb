@@ -11,3 +11,4 @@
 - fix-bug: update api get post server
 - fix-bug: modify connectToDatabase
 - fix-bug: fix get posts data error
+- fix-bug: fix get posts data error 1

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { deleteAPI, getAPI, getUrl, putAPI } from 'utils';
+import { deleteAPI, getAPI, getUrl, putAPI, sleep } from 'utils';
 import styles from 'styles/Home.module.scss';
 import { API_POSTS } from 'contants/apiPath';
 
@@ -63,7 +63,8 @@ export default function Posts({ data: initData }) {
     const ids = Object.keys(selected).filter(key => selected[key]);
     deleteAPI(API_POSTS, {
       body: JSON.stringify(ids),
-    }, () => {
+    }, async () => {
+      await sleep(1000)
       reloadData();
     }, null, setLoading);
   };
