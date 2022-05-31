@@ -60,13 +60,23 @@ export default function Posts({ data: initData }) {
   };
 
   const deleteMutiPost = () => {
+    setLoading(true);
     const ids = Object.keys(selected).filter(key => selected[key]);
     deleteAPI(API_POSTS, {
       body: JSON.stringify(ids),
     }, async () => {
-      await sleep(1000)
-      reloadData();
-    }, null, setLoading);
+      await sleep(100);
+
+      getAPI(API_POSTS, {}, (res) => {
+        setData(res.data);
+        setLoading(false);
+      }, () => {
+        setLoading(false);
+      });
+
+    }, () => {
+      setLoading(false);
+    });
   };
 
   return (

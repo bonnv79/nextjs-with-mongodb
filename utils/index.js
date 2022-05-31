@@ -38,6 +38,7 @@ export const getAPI = async (url, options = {}, success = EMPTY_FUNCTION, error 
 
 export const postAPI = async (url, options = {}, success = EMPTY_FUNCTION, error = EMPTY_FUNCTION, loading = EMPTY_FUNCTION) => {
   try {
+    loading(true);
     return await fetch(getUrl(url), {
       method: 'POST',
       ...options
@@ -47,14 +48,17 @@ export const postAPI = async (url, options = {}, success = EMPTY_FUNCTION, error
       } else {
         error(data);
       }
+      loading(false);
     })
   } catch (error) {
     console.error(error);
+    loading(false);
   }
 }
 
 export const putAPI = async (url, options = {}, success = EMPTY_FUNCTION, error = EMPTY_FUNCTION, loading = EMPTY_FUNCTION) => {
   try {
+    loading(true);
     return await fetch(getUrl(url), {
       method: 'PUT',
       ...options
@@ -64,14 +68,17 @@ export const putAPI = async (url, options = {}, success = EMPTY_FUNCTION, error 
       } else {
         error(data);
       }
+      loading(false);
     })
   } catch (error) {
     console.error(error);
+    loading(false);
   }
 }
 
 export const deleteAPI = async (url, options = {}, success = EMPTY_FUNCTION, error = EMPTY_FUNCTION, loading = EMPTY_FUNCTION) => {
   try {
+    loading(true);
     return await fetch(getUrl(url), {
       method: 'DELETE',
       ...options
@@ -81,9 +88,11 @@ export const deleteAPI = async (url, options = {}, success = EMPTY_FUNCTION, err
       } else {
         error(data);
       }
+      loading(false);
     })
   } catch (error) {
     console.error(error);
+    loading(false);
   }
 }
 

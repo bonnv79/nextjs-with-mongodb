@@ -13,7 +13,7 @@ async function getPosts(req, res) {
       .toArray();
 
     return res.json({
-      data: JSON.parse(JSON.stringify(data ? data : {})),
+      data,
       message: 'Get data successfully',
       success: true,
     });

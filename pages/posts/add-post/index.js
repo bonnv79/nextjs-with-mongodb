@@ -41,7 +41,7 @@ export default function AddPost() {
   return (
     <div>
       <div className={styles.container}>
-        <form onSubmit={handlePost} className={styles.form}>
+        <form className={styles.form}>
           <div className={styles.formItem}>
             <label>Title</label>
             <input
@@ -63,10 +63,10 @@ export default function AddPost() {
           </div>
           <div className={styles.formItem}>
             <Link href="/posts">
-              <button className={styles.margin}>Back Posts</button>
+              <button className={styles.margin} disabled={loading}>Back Posts</button>
             </Link>
 
-            <button type="submit" disabled={loading}>{loading ? 'Adding' : 'Add post'}</button>
+            <button type="button" disabled={loading} onClick={handlePost}>{loading ? 'Adding' : 'Add post'}</button>
           </div>
 
           {error ? (
