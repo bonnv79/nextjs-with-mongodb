@@ -8,3 +8,5 @@
 ##### Release date: 31/5/2022
 - improvement: format api request function
 - fix-bug: delete mutil error
+- fix-bug: update api get post server
+- fix-bug: modify connectToDatabase
