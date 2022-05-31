@@ -10,3 +10,4 @@
 - fix-bug: delete mutil error
 - fix-bug: update api get post server
 - fix-bug: modify connectToDatabase
+- fix-bug: fix get posts data error
