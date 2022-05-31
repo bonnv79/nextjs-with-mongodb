@@ -35,28 +35,43 @@ export default function Posts({ data: initData }) {
   // console.log(data)
   // console.log(selected)
 
-  const reloadData = () => {
+  const refreshData = () => {
+    getAPI(API_POSTS, {}, (res) => {
+      setData(res.data);
+      setLoading(false);
+    }, () => {
+      setLoading(false);
+    });
+  }
+
+  const handleFreshData = () => {
     getAPI(API_POSTS, {}, (res) => {
       setData(res.data);
     }, null, setLoading);
   }
 
   const publishPost = (postId) => {
+    setLoading(true);
     putAPI(API_POSTS, {
       body: postId,
     }, () => {
-      reloadData();
-    }, null, setLoading);
+      refreshData();
+    }, () => {
+      setLoading(false);
+    });
   };
 
   const deletePost = (postId) => {
+    setLoading(true);
     deleteAPI(API_POSTS, {
       body: JSON.stringify({
         id: postId
       }),
     }, () => {
-      reloadData();
-    }, null, setLoading);
+      refreshData();
+    }, () => {
+      setLoading(false);
+    });
   };
 
   const deleteMutiPost = () => {
@@ -66,14 +81,7 @@ export default function Posts({ data: initData }) {
       body: JSON.stringify(ids),
     }, async () => {
       await sleep(100);
-
-      getAPI(API_POSTS, {}, (res) => {
-        setData(res.data);
-        setLoading(false);
-      }, () => {
-        setLoading(false);
-      });
-
+      refreshData();
     }, () => {
       setLoading(false);
     });
@@ -92,7 +100,7 @@ export default function Posts({ data: initData }) {
 
       <button onClick={deleteMutiPost}>Delete selected items</button>
 
-      <button className={styles.margin} onClick={reloadData}>Refresh data</button>
+      <button className={styles.margin} onClick={handleFreshData}>Refresh data</button>
 
       <div>
         <table style={{ borderCollapse: "collapse" }}>
