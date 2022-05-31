@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { getUrl } from 'utils';
+import { deleteAPI, getAPI, getUrl, putAPI } from 'utils';
 import styles from 'styles/Home.module.scss';
+import { API_POSTS } from 'contants/apiPath';
 
 const columns = [
   {
@@ -32,73 +33,37 @@ export default function Posts({ data: initData }) {
   const [data, setData] = useState(initData);
   const [loading, setLoading] = useState(false);
   // console.log(data)
-  console.log(selected)
+  // console.log(selected)
 
-  const reloadData = async () => {
-    setLoading(true);
-
-    try {
-      await fetch(getUrl('/api/posts'), {
-        method: 'GET'
-      }).then(res => res.json()).then(json => {
-        if (json.success) {
-          setData(json.data);
-        }
-        setLoading(false);
-      })
-    } catch (error) {
-      return setLoading(false);
-    }
+  const reloadData = () => {
+    getAPI(API_POSTS, {}, (res) => {
+      setData(res.data);
+    }, null, setLoading);
   }
 
-  const publishPost = async (postId) => {
-    setLoading(true);
-
-    try {
-      await fetch(getUrl('/api/posts'), {
-        method: 'PUT',
-        body: postId,
-      });
-
-      setLoading(false);
+  const publishPost = (postId) => {
+    putAPI(API_POSTS, {
+      body: postId,
+    }, () => {
       reloadData();
-    } catch (error) {
-      return setLoading(false);
-    }
+    }, null, setLoading);
   };
 
-  const deletePost = async (postId) => {
-    setLoading(true);
-
-    try {
-      await fetch(getUrl('/api/posts'), {
-        method: 'DELETE',
-        body: postId,
-      });
-
-      setLoading(false);
+  const deletePost = (postId) => {
+    deleteAPI(API_POSTS, {
+      body: postId,
+    }, () => {
       reloadData();
-    } catch (error) {
-      return setLoading(false);
-    }
+    }, null, setLoading);
   };
 
-  const deleteMutiPost = async () => {
-    setLoading(true);
-
-    try {
-      const ids = Object.keys(selected).filter(key => selected[key]);
-
-      await fetch(getUrl('/api/posts'), {
-        method: 'DELETE',
-        body: JSON.stringify(ids),
-      });
-
-      setLoading(false);
+  const deleteMutiPost = () => {
+    const ids = Object.keys(selected).filter(key => selected[key]);
+    deleteAPI(API_POSTS, {
+      body: JSON.stringify(ids),
+    }, () => {
       reloadData();
-    } catch (error) {
-      return setLoading(false);
-    }
+    }, null, setLoading);
   };
 
   return (
@@ -113,6 +78,8 @@ export default function Posts({ data: initData }) {
       </Link>
 
       <button onClick={deleteMutiPost}>Delete selected items</button>
+
+      <button className={styles.margin} onClick={reloadData}>Refresh data</button>
 
       <div>
         <table style={{ borderCollapse: "collapse" }}>
@@ -148,7 +115,7 @@ export default function Posts({ data: initData }) {
                           value={checked}
                           onChange={toggle}
                         />
-                        <label htmlFor={_id}>Checkbox {index}</label>
+                        <label htmlFor={_id}>C{index}</label>
                       </div>
                     </td>
                     {

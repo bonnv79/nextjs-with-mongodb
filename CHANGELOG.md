@@ -4,3 +4,6 @@
 - Init project connect monogodb and show user data
 - new-feature: Add posts, add CRUD post
 - fix-bug: modify reload posts data
+
+##### Release date: 31/5/2022
+- improvement: format api request function

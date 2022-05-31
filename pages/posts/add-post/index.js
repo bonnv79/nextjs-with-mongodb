@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import styles from 'styles/Home.module.scss';
+import { postAPI } from 'utils';
+import { API_POSTS } from 'contants/apiPath';
 
 export default function AddPost() {
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
-  const handlePost = async (e) => {
+  const handlePost = (e) => {
     e.preventDefault();
     setError('');
     setMessage('');
@@ -18,24 +21,19 @@ export default function AddPost() {
     let post = {
       title,
       body: content,
-      published: true,
+      published: false,
       date: new Date().toISOString(),
     };
 
-    let response = await fetch('/api/posts', {
-      method: 'POST',
+    postAPI(API_POSTS, {
       body: JSON.stringify(post),
-    });
-
-    let data = await response.json();
-
-    if (data.success) {
+    }, (data) => {
+      setMessage(data.message);
       setTitle('');
       setContent('');
-      return setMessage(data.message);
-    } else {
-      return setError(data.message);
-    }
+    }, (data) => {
+      setError(data.message);
+    }, setLoading);
   };
 
   return (
@@ -66,7 +64,7 @@ export default function AddPost() {
               <button className={styles.margin}>Back Posts</button>
             </Link>
 
-            <button type="submit">Add post</button>
+            <button type="submit" disabled={loading}>{loading ? 'Adding' : 'Add post'}</button>
           </div>
 
           {error ? (
