@@ -15,3 +15,6 @@
 - fix-bug: fix get posts data error 2
 - fix-bug: fix get posts data error finished
 - improvement: Modify database name
+
+##### Release date: 2/6/2022
+- fix-bug: remove .env file
